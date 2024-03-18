@@ -1,1 +1,6 @@
-This is a test file
+version: '3.8'
+services:
+  webserver:
+    image: httpd:latest
+    ports:
+      - "8080:80"
