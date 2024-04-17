@@ -24,7 +24,7 @@ services:
 
   qdirect-prod-consumer-service:
     # Running on port 8081
-    image: registry.gitlab.com/marineworks/qdirect-backend/q-direct-consumer-service:digipath-sprint-75
+    image: registry.gitlab.com/marineworks/qdirect-backend/q-direct-consumer-service:digipath-sprint-76
     container_name: qdirect-prod-consumer-service
     restart: on-failure
     ports:
@@ -61,7 +61,7 @@ services:
     ports:
       - "3000:3000"
     environment:
-      - BACKEND_BASE_URL=http://134.209.194.28:8082/
+      - BACKEND_BASE_URL=http://localhost:8082/
       - FRONTEND_BASE_PATH=
       - COMPANY_UUID=ea3ba51d-239e-4d73-b6dd-2299805dd4c6
     networks:
