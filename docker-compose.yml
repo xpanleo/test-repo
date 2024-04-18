@@ -1,10 +1,8 @@
-version: "4.0"
+version: "3.0"
 
 services:
-
   qdirect-prod-postgres-consumer:
     image: postgis/postgis:12-master
-    container_name: qdirect-prod-postgres-consumer
     restart: on-failure
     ports:
       - "5433:5433"
@@ -14,26 +12,16 @@ services:
       - POSTGRES_DB=qdirect
       - PGPORT=5433
     volumes:
-      - /backup/postgres/data/consumer:/var/lib/postgresql/data
-    networks:
-      qdirect:
-        aliases:
-          - qdirect-prod-postgres-consumer
-          - qdirect-prod-postgres-consumer.local
-        ipv4_address: 172.89.60.29
+      - C:\qmanual\postgres\data\consumer:/var/lib/postgresql/data
 
   qdirect-prod-consumer-service:
     # Running on port 8081
     image: registry.gitlab.com/marineworks/qdirect-backend/q-direct-consumer-service:digipath-sprint-76
-    container_name: qdirect-prod-consumer-service
     restart: on-failure
     ports:
       - "8082:8081"
-    # logging:
-    #   driver: journald
     volumes:
-    #   - ./qdirect-prod-consumer-service:/var/logs/qdirect-prod-consumer-service:rw
-      - /backup/consumer-files:/files:rw
+      - C:\qmanual\consumer-files:/files:rw
     depends_on:
       - qdirect-prod-postgres-consumer
     environment:
@@ -46,17 +34,10 @@ services:
       - SPRING_APPLICATION_NAME=qdirect-prod-consumer-service
       - LOGGING_FILE_NAME=/var/logs/qdirect-prod-consumer-service/qdirect-prod-consumer-service.log
       - COMPANY_UUID=ea3ba51d-239e-4d73-b6dd-2299805dd4c6
-    networks:
-      qdirect:
-        aliases:
-          - qdirect-prod-consumer-service
-          - qdirect-prod-consumer-service.local
-        ipv4_address: 172.89.60.32
 
   qdirect-prod-consumer-frontend:
     # Running on port 5000
     image: registry.gitlab.com/marineworks/qdirect-backend/q-direct-consumer-frontend:digipath-sprint-75
-    container_name: qdirect-prod-consumer-frontend2
     restart: on-failure
     ports:
       - "3000:3000"
@@ -64,18 +45,4 @@ services:
       - BACKEND_BASE_URL=http://localhost:8082/
       - FRONTEND_BASE_PATH=
       - COMPANY_UUID=ea3ba51d-239e-4d73-b6dd-2299805dd4c6
-    networks:
-      qdirect:
-        aliases:
-          - qdirect-prod-consumer-frontend
-          - qdirect-prod-consumer-frontend.local
-        ipv4_address: 172.89.60.34
 
-networks:
-  qdirect:
-    driver: bridge
-    ipam:
-      driver: default
-      config:
-        -
-          subnet: 172.89.60.0/24
