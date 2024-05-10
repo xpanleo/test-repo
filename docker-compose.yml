@@ -1,4 +1,5 @@
 version: "3.0"
+
 services:
   qdirect-prod-postgres-consumer:
     image: postgis/postgis:12-master
@@ -12,9 +13,9 @@ services:
       - PGPORT=5433
     volumes:
       - C:\qmanual\postgres\data\consumer:/var/lib/postgresql/data
-    networks:
-      - qdirect-network
+
   qdirect-prod-consumer-service:
+    # Running on port 8081
     image: registry.gitlab.com/marineworks/qdirect-backend/q-direct-consumer-service:digipath-sprint-76
     restart: on-failure
     ports:
@@ -33,18 +34,14 @@ services:
       - SPRING_APPLICATION_NAME=qdirect-prod-consumer-service
       - LOGGING_FILE_NAME=/var/logs/qdirect-prod-consumer-service/qdirect-prod-consumer-service.log
       - COMPANY_UUID=ea3ba51d-239e-4d73-b6dd-2299805dd4c6
-    networks:
-      - qdirect-network
+
   qdirect-prod-consumer-frontend:
+    # Running on port 5000
     image: registry.gitlab.com/marineworks/qdirect-backend/q-direct-consumer-frontend:digipath-sprint-75
     restart: on-failure
     ports:
       - "3000:3000"
     environment:
-      - BACKEND_BASE_URL=http://qdirect-prod-consumer-service:8081/
+      - BACKEND_BASE_URL=http://192.168.1.105:8082/
       - FRONTEND_BASE_PATH=
       - COMPANY_UUID=ea3ba51d-239e-4d73-b6dd-2299805dd4c6
-    networks:
-      - qdirect-network
-networks:
-  qdirect-network:
