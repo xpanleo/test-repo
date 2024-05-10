@@ -42,6 +42,6 @@ services:
     ports:
       - "3000:3000"
     environment:
-      - BACKEND_BASE_URL=http://192.168.1.105:8082/
+      - BACKEND_BASE_URL=http://10.0.0.108:8082/
       - FRONTEND_BASE_PATH=
       - COMPANY_UUID=ea3ba51d-239e-4d73-b6dd-2299805dd4c6
