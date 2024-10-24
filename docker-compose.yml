@@ -16,7 +16,7 @@ services:
 
   qdirect-prod-consumer-service:
     # Running on port 8081
-    image: registry.gitlab.com/marineworks/qdirect-backend/q-direct-consumer-service:digipath-sprint-78
+    image: http://registry.gitlab.com/leon.panag/qmanuals-obsolete/q-direct-consumer-service:digipath-sprint-100
     restart: on-failure
     ports:
       - "8082:8081"
@@ -37,7 +37,7 @@ services:
 
   qdirect-prod-consumer-frontend:
     # Running on port 5000
-    image: registry.gitlab.com/marineworks/qdirect-backend/q-direct-consumer-frontend:digipath-sprint-78
+    image: http://registry.gitlab.com/leon.panag/qmanuals-obsolete/q-direct-consumer-frontend:digipath-sprint-100
     restart: on-failure
     ports:
       - "3000:3000"
